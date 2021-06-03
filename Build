@@ -1,0 +1,36 @@
+#This function works to find the largest rectange possible form a series of "cuts" made to the original rectangle.
+#Since the area of a rectangle is base multiplied by height, we only need to find the largest possible base and multiply it by the largest possible height.
+
+#Here are a set of parameters
+h = 5
+w = 5
+horizontalCuts = [1,2,4]
+verticalCuts = [1,2]
+
+
+#This function finds the largest "gap" in the the cuts and edges of the cake. The array matrix has already been updated to include the edges.
+def findLargest(matrix):
+    largest = 0
+    cakeSize = matrix[len(matrix) - 1]
+    for i in range(len(matrix) - 1):
+        test = matrix[i+1] - matrix[i]
+        if  test > largest and matrix[i+1] <= cakeSize:
+            largest = test
+    return largest
+        
+#In order for findLargest to work, the cuts needs to be in order from smallest to largest, including the edges of the cake.
+horizontalCuts.sort()
+horizontalCuts.append(h)
+horizontalCuts.insert(0,0)
+        
+verticalCuts.sort()
+verticalCuts.append(w)
+verticalCuts.insert(0,0)
+        
+#Here we simply call the function in order to find the largest instance of each of base and height, represented by xVal and yVal.
+yVal = findLargest(horizontalCuts)
+xVal = findLargest(verticalCuts)
+
+#The original problem called for this modulus in order to ensure too large a number isn't returned to their server, this can be ignored
+#for any future use of this program.
+print(( xVal * yVal) % (10**9 + 7))
